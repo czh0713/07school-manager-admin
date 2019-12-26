@@ -4,7 +4,15 @@
         <h1>全校学生</h1>
         <h1>{{studentCount}}</h1>
       </div>
-
+	  <div class="item">
+        <h1>全校老师</h1>
+        <h1>{{teacherCount}}</h1>
+      </div>
+	  <div class="item">
+        <h1>全校班级</h1>
+        <h1>{{classCount}}</h1>
+      </div>
+	
 
   </div>
 </template>
@@ -22,14 +30,34 @@
 
     data(){
       return{
+		students:'',
         studentCount:'',
+		teacher:'',
         teacherCount:'',
+		classs:'',
+		classCount: ''
 
       }
     },
     mounted(){
-      this.$http.get('/api/student/count').then(res => {
-        this.studentCount = res})
+		this.$http.post('/api/student/get').then(res => {
+        this.students = res
+		this.studentCount = this.students.length;
+		console.log(this.studentCount);
+		})
+	
+		this.$http.post('/api/teacher/get').then(res => {
+        this.teacher = res
+		this.teacherCount = this.teacher.length;
+		console.log(this.teacherCount);
+		})
+		
+		this.$http.post('/api/classs/get').then(res => {
+        this.classs = res
+		this.classCount = this.classs.length;
+		console.log(this.classCount);
+		})
+	
 
 
     }
